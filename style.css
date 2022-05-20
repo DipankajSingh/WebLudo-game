@@ -1,0 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100vh;
+  width: 100vw;
+  /* background-color: #ffffff; */
+  background-color: #d4cbcb;
+  
+  display: grid;
+  place-content: center;
+}
+canvas{
+  border: 1px solid #000;
+}
