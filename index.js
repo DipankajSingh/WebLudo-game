@@ -5,6 +5,11 @@ const canvasSize = 500;
 canvas.height = canvasSize;
 canvas.width = canvasSize;
 const homeSize = 180;
+const gapeLong = (
+  Math.round((canvasSize - homeSize * 2) / 3)
+);
+const gapeSmall = (homeSize / 5);
+///////////////////////////////////////////////////////////////////////
 //  classes and constructors
 
 class Shape {
@@ -66,17 +71,54 @@ class CreateBox {
   }
 }
 
+class RestCell {
+  drawRestIcon(xPos = new Number, yPos = new Number) {
+    const img = new Image(gapeSmall / 2, gapeSmall / 2);
+    img.addEventListener('load', () => {
+      ctx.drawImage(img, xPos, yPos);
+    });
+    img.src = 'stop.png';
+  }
+}
+//////////////////////////////////////////////////////////////////////
+
+// fixing resting points
+
+const restPoint = new RestCell();
+
+restPoint.drawRestIcon(gapeSmall + (gapeSmall / 6), homeSize + (gapeLong / 5));
+
+restPoint.drawRestIcon((canvasSize - homeSize) - (gapeLong - 10), gapeSmall + (gapeSmall / 10));
+
+restPoint.drawRestIcon(canvasSize - (gapeSmall * 2 - 5),
+  canvasSize - homeSize - (gapeLong - 10));
+
+restPoint.drawRestIcon(homeSize + (gapeLong / 5),
+  canvasSize - (gapeSmall * 1.9));
+
+restPoint.drawRestIcon(gapeSmall * 2 + (gapeSmall / 6), canvasSize - homeSize - (gapeLong * .8));
+
+restPoint.drawRestIcon(homeSize + (gapeLong * .3), gapeSmall * 2 + (gapeSmall / 10));
+
+restPoint.drawRestIcon(canvasSize - (gapeSmall * 3 - 5),
+  canvasSize - homeSize - (gapeLong * 3 - 10));
+
+restPoint.drawRestIcon(homeSize + (gapeLong * 2.2),
+  canvasSize - (gapeSmall * 2.9));
+//////////////////////////////////////////////////////////////////////
 // making of grids
-const gapeLong = (
-  Math.round((canvasSize - homeSize * 2) / 3)
-);
-const gapeSmall = (homeSize / 5);
+
 const line = new Shape();
 const homePath = new Shape();
 
 homePath.draw([gapeSmall, homeSize], [[gapeSmall * 2, homeSize], [gapeSmall * 2, homeSize + gapeLong], [homeSize, homeSize + gapeLong], [homeSize, homeSize + (gapeLong * 2)], [gapeSmall, homeSize + (gapeLong * 2)]], 'crimson', 0);
 
 homePath.draw([canvasSize - homeSize, gapeSmall], [[gapeLong + homeSize, gapeSmall], [gapeLong + homeSize, homeSize], [homeSize + (gapeLong * 2), homeSize], [homeSize + (gapeLong * 2), gapeSmall * 2], [canvasSize - homeSize, gapeSmall * 2]], 'limegreen', 0);
+
+homePath.draw([canvasSize - homeSize, homeSize + gapeLong], [[canvasSize - gapeSmall, homeSize + gapeLong], [canvasSize - gapeSmall, canvasSize - homeSize], [canvasSize - (gapeSmall * 2), canvasSize - homeSize], [canvasSize - (gapeSmall * 2), homeSize + (gapeLong * 2)], [canvasSize - homeSize, homeSize + (gapeLong * 2)]], 'yellow', 0);
+
+homePath.draw([homeSize, canvasSize - (gapeSmall * 2)], [[homeSize + gapeLong, canvasSize - (gapeSmall * 2)], [homeSize + gapeLong, canvasSize - homeSize], [homeSize + (gapeLong * 2), canvasSize - homeSize], [homeSize + (gapeLong * 2), canvasSize - gapeSmall], [homeSize, canvasSize - gapeSmall]], '#3a3acc', 0);
+
 
 line.drawLine([
   [
@@ -136,7 +178,7 @@ const home4 = new CreateBox(
   canvasSize - homeSize,
   homeSize,
   homeSize,
-  "blue"
+  "#3a3acc"
 );
 home4.drawBox();
 
