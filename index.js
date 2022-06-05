@@ -1,14 +1,61 @@
+// variables and constents
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
 const canvasSize = 500;
 canvas.height = canvasSize;
 canvas.width = canvasSize;
 const homeSize = 180;
-const gapeLong = (
+const longGape = (
   Math.round((canvasSize - homeSize * 2) / 3)
 );
-const gapeSmall = (homeSize / 5);
+const smallGape = (homeSize / 5);
+const whiteCellAddress = [
+  [smallGape / 13, homeSize + (longGape / 5)],
+  [smallGape + (smallGape / 15), homeSize + (longGape / 5)]
+  ,[smallGape*2+(smallGape / 15),homeSize + (longGape / 5)],
+  [smallGape*3+(smallGape / 15),homeSize + (longGape / 5)],
+  [smallGape*4+(smallGape / 15),homeSize + (longGape / 5)],
+  // Cell_4
+  // Cell_5
+  // Cell_6
+  // Cell_7
+  // Cell_8
+  // Cell_9
+  // Cell_10
+  // Cell_11
+  // Cell_12
+  // Cell_13
+  // Cell_14
+  // Cell_15
+  // Cell_16
+  // Cell_17
+  // Cell_18
+  // Cell_19
+  // Cell_20
+  // Cell_21
+  // Cell_22
+  // Cell_23
+  // Cell_24
+  // Cell_25
+  // Cell_26
+  // Cell_27
+  // Cell_28
+  // Cell_29
+  // Cell_30
+  // Cell_31
+  // Cell_32
+  // Cell_33
+  // Cell_34
+  // Cell_35
+  // Cell_36
+  // Cell_37
+  // Cell_38
+  // Cell_39
+  // Cell_40
+
+];
+
 ///////////////////////////////////////////////////////////////////////
 //  classes and constructors
 
@@ -73,79 +120,126 @@ class CreateBox {
 
 class RestCell {
   drawRestIcon(xPos = new Number, yPos = new Number) {
-    const img = new Image(gapeSmall / 2, gapeSmall / 2);
+    const img = new Image(smallGape / 2, smallGape / 2);
     img.addEventListener('load', () => {
       ctx.drawImage(img, xPos, yPos);
     });
-    img.src = 'stop.png';
+    img.src = './assets/stop.png';
   }
 }
+
+class Button {
+  constructor(xPos, yPos, memberOf = new String) {
+    this.position = [xPos, yPos];
+    this.memberOf = memberOf;
+    this.isResting = false;
+    this.img = new Image(smallGape / 2, smallGape / 2);
+  }
+  
+  update(pos = []) {
+    this.position = pos;
+    console.log('called')
+  }
+  drawRestIcon(src = new String) {
+    this.img.addEventListener('load', () => {
+      ctx.drawImage(this.img, ...this.position);
+    });
+    this.img.src = src;
+    return { pos: this.position, member: this.memberOf };
+  }
+
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+//  functions
+function rollDice() {
+  const src = [
+    "./assets/dice/one.png",
+    "./assets/dice/two.png",
+    "./assets/dice/three.png",
+    "./assets/dice/four.png",
+    "./assets/dice/five.png",
+    "./assets/dice/six.png",
+  ];
+  const img = new Image();
+  img.addEventListener('load', (e, pos = homeSize + smallGape + 5) => {
+    ctx.drawImage(img, pos, pos);
+  });
+  let randomSrc = Math.round(Math.random() * 5)
+  img.src = src[randomSrc];
+
+  return randomSrc + 1;
+};
+rollDice();
 //////////////////////////////////////////////////////////////////////
 
 // fixing resting points
 
 const restPoint = new RestCell();
 
-restPoint.drawRestIcon(gapeSmall + (gapeSmall / 6), homeSize + (gapeLong / 5));
+restPoint.drawRestIcon(smallGape + (smallGape / 6), homeSize + (longGape / 5));
 
-restPoint.drawRestIcon((canvasSize - homeSize) - (gapeLong - 10), gapeSmall + (gapeSmall / 10));
+restPoint.drawRestIcon((canvasSize - homeSize) - (longGape - 10), smallGape + (smallGape / 10));
 
-restPoint.drawRestIcon(canvasSize - (gapeSmall * 2 - 5),
-  canvasSize - homeSize - (gapeLong - 10));
+restPoint.drawRestIcon(canvasSize - (smallGape * 2 - 5),
+  canvasSize - homeSize - (longGape - 10));
 
-restPoint.drawRestIcon(homeSize + (gapeLong / 5),
-  canvasSize - (gapeSmall * 1.9));
+restPoint.drawRestIcon(homeSize + (longGape / 5),
+  canvasSize - (smallGape * 1.9));
 
-restPoint.drawRestIcon(gapeSmall * 2 + (gapeSmall / 6), canvasSize - homeSize - (gapeLong * .8));
+restPoint.drawRestIcon(smallGape * 2 + (smallGape / 6), canvasSize - homeSize - (longGape * .8));
 
-restPoint.drawRestIcon(homeSize + (gapeLong * .3), gapeSmall * 2 + (gapeSmall / 10));
+restPoint.drawRestIcon(homeSize + (longGape * .3), smallGape * 2 + (smallGape / 10));
 
-restPoint.drawRestIcon(canvasSize - (gapeSmall * 3 - 5),
-  canvasSize - homeSize - (gapeLong * 3 - 10));
+restPoint.drawRestIcon(canvasSize - (smallGape * 3 - 5),
+  canvasSize - homeSize - (longGape * 3 - 10));
 
-restPoint.drawRestIcon(homeSize + (gapeLong * 2.2),
-  canvasSize - (gapeSmall * 2.9));
+restPoint.drawRestIcon(homeSize + (longGape * 2.2),
+  canvasSize - (smallGape * 2.9));
 //////////////////////////////////////////////////////////////////////
 // making of grids
 
 const line = new Shape();
 const homePath = new Shape();
 
-homePath.draw([gapeSmall, homeSize], [[gapeSmall * 2, homeSize], [gapeSmall * 2, homeSize + gapeLong], [homeSize, homeSize + gapeLong], [homeSize, homeSize + (gapeLong * 2)], [gapeSmall, homeSize + (gapeLong * 2)]], 'crimson', 0);
+homePath.draw([smallGape, homeSize], [[smallGape * 2, homeSize], [smallGape * 2, homeSize + longGape], [homeSize, homeSize + longGape], [homeSize, homeSize + (longGape * 2)], [smallGape, homeSize + (longGape * 2)]], 'crimson', 0);
 
-homePath.draw([canvasSize - homeSize, gapeSmall], [[gapeLong + homeSize, gapeSmall], [gapeLong + homeSize, homeSize], [homeSize + (gapeLong * 2), homeSize], [homeSize + (gapeLong * 2), gapeSmall * 2], [canvasSize - homeSize, gapeSmall * 2]], 'limegreen', 0);
+homePath.draw([canvasSize - homeSize, smallGape], [[longGape + homeSize, smallGape], [longGape + homeSize, homeSize], [homeSize + (longGape * 2), homeSize], [homeSize + (longGape * 2), smallGape * 2], [canvasSize - homeSize, smallGape * 2]], 'limegreen', 0);
 
-homePath.draw([canvasSize - homeSize, homeSize + gapeLong], [[canvasSize - gapeSmall, homeSize + gapeLong], [canvasSize - gapeSmall, canvasSize - homeSize], [canvasSize - (gapeSmall * 2), canvasSize - homeSize], [canvasSize - (gapeSmall * 2), homeSize + (gapeLong * 2)], [canvasSize - homeSize, homeSize + (gapeLong * 2)]], 'yellow', 0);
+homePath.draw([canvasSize - homeSize, homeSize + longGape], [[canvasSize - smallGape, homeSize + longGape], [canvasSize - smallGape, canvasSize - homeSize], [canvasSize - (smallGape * 2), canvasSize - homeSize], [canvasSize - (smallGape * 2), homeSize + (longGape * 2)], [canvasSize - homeSize, homeSize + (longGape * 2)]], 'yellow', 0);
 
-homePath.draw([homeSize, canvasSize - (gapeSmall * 2)], [[homeSize + gapeLong, canvasSize - (gapeSmall * 2)], [homeSize + gapeLong, canvasSize - homeSize], [homeSize + (gapeLong * 2), canvasSize - homeSize], [homeSize + (gapeLong * 2), canvasSize - gapeSmall], [homeSize, canvasSize - gapeSmall]], '#3a3acc', 0);
+homePath.draw([homeSize, canvasSize - (smallGape * 2)], [[homeSize + longGape, canvasSize - (smallGape * 2)], [homeSize + longGape, canvasSize - homeSize], [homeSize + (longGape * 2), canvasSize - homeSize], [homeSize + (longGape * 2), canvasSize - smallGape], [homeSize, canvasSize - smallGape]], '#3a3acc', 0);
 
 
 line.drawLine([
   [
-    [0, gapeLong + homeSize],
-    [canvasSize, gapeLong + homeSize]
+    [0, longGape + homeSize],
+    [canvasSize, longGape + homeSize]
   ],
   [
-    [0, gapeLong * 2 + homeSize],
-    [canvasSize, gapeLong * 2 + homeSize]
+    [0, longGape * 2 + homeSize],
+    [canvasSize, longGape * 2 + homeSize]
   ],
   [
-    [gapeLong * 2 + homeSize, 0],
-    [gapeLong * 2 + homeSize, canvasSize]
+    [longGape * 2 + homeSize, 0],
+    [longGape * 2 + homeSize, canvasSize]
   ],
   [
-    [gapeLong + homeSize, 0],
-    [gapeLong + homeSize, canvasSize]
+    [longGape + homeSize, 0],
+    [longGape + homeSize, canvasSize]
   ]
 ]);
 
 const blocks = new Shape();
 let i = 1;
 while (i < 6) {
-  blocks.drawLine([[[gapeSmall * i, homeSize], [gapeSmall * i, canvasSize - homeSize]]]);
-  blocks.drawLine([[[canvasSize - (gapeSmall * i), homeSize], [canvasSize - (gapeSmall * i), canvasSize - homeSize]]]);
-  blocks.drawLine([[[homeSize, gapeSmall * i], [canvasSize - homeSize, gapeSmall * i]]]);
-  blocks.drawLine([[[homeSize, (canvasSize + (gapeSmall * i)) - homeSize], [canvasSize - homeSize, (canvasSize + (gapeSmall * i)) - homeSize]]]);
+  blocks.drawLine([[[smallGape * i, homeSize], [smallGape * i, canvasSize - homeSize]]]);
+  blocks.drawLine([[[canvasSize - (smallGape * i), homeSize], [canvasSize - (smallGape * i), canvasSize - homeSize]]]);
+  blocks.drawLine([[[homeSize, smallGape * i], [canvasSize - homeSize, smallGape * i]]]);
+  blocks.drawLine([[[homeSize, (canvasSize + (smallGape * i)) - homeSize], [canvasSize - homeSize, (canvasSize + (smallGape * i)) - homeSize]]]);
   i = i + 1;
 };
 
@@ -175,7 +269,7 @@ home3.drawBox();
 
 const home4 = new CreateBox(
   0,
-  canvasSize - homeSize,
+  canvasSize - homeSize, 
   homeSize,
   homeSize,
   "#3a3acc"
@@ -215,3 +309,20 @@ gridsLine.draw(
   ],
   "transparent"
 );
+
+const b = new Button(...whiteCellAddress[0], 'home1')
+b.drawRestIcon('./assets/button/button_red.png');
+// console.log('position after keypress', b.position);
+
+function roll(e) {
+   if (e.code == 'Space') {
+    const i=rollDice();
+    b.update(whiteCellAddress[i]);
+    console.log(whiteCellAddress[i])
+    b.drawRestIcon('./assets/button/button_red.png');
+    
+  }
+}
+
+addEventListener('keyup', (e) =>roll(e));
+// b.position = whiteCellAddress.Cell_2;
