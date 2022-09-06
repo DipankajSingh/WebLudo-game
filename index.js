@@ -2,10 +2,10 @@
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const canvasSize = 500;
+const canvasSize = 700;
 canvas.height = canvasSize;
 canvas.width = canvasSize;
-const homeSize = 180;
+const homeSize = 210;
 const longGape = (
   Math.round((canvasSize - homeSize * 2) / 3)
 );
